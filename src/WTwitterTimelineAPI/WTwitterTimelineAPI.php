@@ -16,9 +16,18 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
 {
     function __construct()
     {
-
+        add_action( 'admin_menu', array($this,'register_menu'));
     }
 
+    final public function register_menu()
+    {
+        add_menu_page('Twitter Timeline API', 'WTwitter', 'manage_options', 'wtwitter-timeline-api', array($this,'menu_page'), WTTAPI_URL.'/images/icon.png',60);
+    }
+
+    final public function menu_page()
+    {
+
+    }
     /**
      * @see WTwitterTimelineAPISettingsInterface::get_settings
      */
@@ -56,4 +65,5 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         );
     }
 }
+new WTwitterTimelineAPI();
 ?>

@@ -1,0 +1,12 @@
+<div class="wrap">
+    <h1><?=$titulo?></h1>
+    <div class="section panel">
+        <form method="post" enctype="multipart/form-data" action="options.php" autocomplete="off">
+            <?php settings_fields($this->setting_group);?>
+            <?php do_settings_sections($this->menu_slug);?>
+            <p class="submit">
+                <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+            </p>
+        </form>
+    </div>
+</div>

@@ -6,15 +6,38 @@
             <?php do_settings_sections($this->menu_slug);?>
             <p class="submit">
                 <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-                <a href="#test" class="button-secondary"><?=__('Probar Configuración',WTTAPI_DOMAIN)?></a>
+                <a href="#TB_inline?width=32000&height=300&inlineId=my-content-id" class="thickbox button-secondary" id="test-config"><?=__('Probar Configuración',WTTAPI_DOMAIN)?></a>
             </p>
         </form>
     </div>
 </div>
+<?php add_thickbox(); ?>
+<div id="my-content-id" style="display:none;">
+    <h3>Respuesta Cruda del Test</h3>
+     <p>
+          This is my hidden content! It will appear in ThickBox when the link is clicked.
+     </p>
+</div>
+<!-- <a href="#TB_inline?width=600&height=550&inlineId=my-content-id" class="thickbox">View my inline content!</a> -->
 <script type="text/javascript">
 (function($){
-    $(function(){
 
+    $(document).ready(function(){
+        $('#test-config').click(function(){
+            $.getJSON(ajaxurl,{action:'test_config'},function(rsp){
+                console.log(rsp)
+                    $("#my-content-id p").html(rsp);
+
+                }
+            );
+            // $('[type=text],[type=number]').each(function(inx,ele){
+            //     console.log(ele.name.split('[')[1].replace(']',''))
+            // });
+            //$('[type=text],[type=number]').parram()
+            //console.log($('form').serializeArray());
+            //wordpress_twitter_timeline_api_settings[twitter-consumer-secret]
+            ////"wordpress_twitter_timeline_api_settings[twitter-consumer-secret]"
+        });
     });
 })(jQuery)
 </script>

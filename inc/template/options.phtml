@@ -22,7 +22,7 @@
         $('#test-config').click(function(){
             $.get(
                 ajaxurl,
-                {action:'test_config'},
+                {action:'get_timeline'},
                 function(rsp){$("#TB_ajaxContent p").text(rsp);},
                 'text'
             )

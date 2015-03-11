@@ -26,7 +26,8 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
     {
         parent::__construct();
         add_action( 'admin_menu', array($this,'register_menu'));
-        add_action( 'wp_ajax_test_config', array($this,'ajax_test_config'));
+        add_action( 'wp_ajax_get_timeline', array($this,'ajax_get_timeline'));
+        add_action( 'wp_ajax_nopriv_get_timeline', array($this,'ajax_get_timeline'));
     }
 
     final public function register_menu()
@@ -41,7 +42,7 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         include WTTAPI_DIR.'/inc/template/options.phtml';
     }
 
-    final public function ajax_test_config()
+    final public function ajax_get_timeline()
     {
         wp_send_json($this->get_twitter_timeline());
     }
@@ -168,5 +169,5 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         );
     }
 }
-new WTwitterTimelineAPI();
+$WTTAPI=new WTwitterTimelineAPI();
 ?>

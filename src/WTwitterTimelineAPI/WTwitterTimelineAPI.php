@@ -25,9 +25,11 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
     function __construct()
     {
         parent::__construct();
-        add_action( 'admin_menu', array($this,'register_menu'));
-        add_action( 'wp_ajax_get_timeline', array($this,'ajax_get_timeline'));
-        add_action( 'wp_ajax_nopriv_get_timeline', array($this,'ajax_get_timeline'));
+        add_action('admin_menu', array($this,'register_menu'));
+        add_action('wp_ajax_get_timeline', array($this,'ajax_get_timeline'));
+        add_action('wp_ajax_nopriv_get_timeline', array($this,'ajax_get_timeline'));
+        add_action('wp_enqueue_scripts',array($this,'include_css_js'));
+
     }
 
     final public function register_menu()
@@ -45,6 +47,13 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
     final public function ajax_get_timeline()
     {
         wp_send_json($this->get_twitter_timeline());
+    }
+
+    final public function include_css_js()
+    {
+        wp_enqueue_script('wtwitter-core',WTTAPI_URL.'js/wtwitter-timeline-api.js', array('jquery'), 'v1.0.0');
+        wp_localize_script('wtwitter-core','wtta',array('ajaxurl' => admin_url('admin-ajax.php')));
+
     }
 
     private function get_twitter_timeline()

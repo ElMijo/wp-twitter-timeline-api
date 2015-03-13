@@ -34,7 +34,7 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
 
     final public function register_menu()
     {
-        add_menu_page('Twitter Timeline API', 'WTwitter', 'manage_options', $this->menu_slug, array($this,'menu_page'), WTTAPI_URL.'/images/icon.png',60);
+        add_menu_page('Twitter Timeline API', 'WTwitter', 'manage_options', $this->menu_slug, array($this,'menu_page'), WTTAPI_URL.'/images/icon.png',61);
     }
 
     final public function menu_page()

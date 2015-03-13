@@ -56,4 +56,12 @@ function register_foo_widget() {
 
 }
 add_action('widgets_init',function(){register_widget('WTwitterTimelineAPIWidget');});
+
+add_action('init',function(){
+    if(!!is_active_widget(false,false,'wtta_widget')&&!is_admin())
+    {
+        wp_enqueue_style('wtwitter-frontend-timeline-css',WTTAPI_URL.'css/wtwitter-timeline-widget.css');
+        wp_enqueue_script('wtwitter-frontend-timeline-js',WTTAPI_URL.'js/wtwitter-timeline-widget.js',array('wtwitter-core','jquery'));
+    }
+});
 ?>

@@ -1,0 +1,102 @@
+#wtwitter-root{background-color: #CC0000;}
+#wtwitter-root .wtwitter-timeline-header
+{
+    padding: 10px;
+}
+#wtwitter-root .wtwitter-timeline-header img
+{
+
+}
+#wtwitter-root .wtwitter-timeline-header > span
+{
+    position: relative;
+    margin-left: 10px;
+    top: -5px;
+}
+#wtwitter-root .wtwitter-timeline-header .wtwitter-username{}
+#wtwitter-root .wtwitter-timeline-header .wtwitter-screenname
+{
+    position: absolute;
+    top:15px;
+    left: 0px;
+}
+#wtwitter-root .wtwitter-timeline-stream
+{
+    background-color: #FFFFFF;
+    color: #333333;
+    margin-left: 1px;
+    margin-right: 1px;
+    height: 200px;
+    overflow: auto;
+    font-size: 12px;
+}
+#wtwitter-root .wtwitter-timeline-stream li
+{
+    padding: 10px 15px;
+    border-bottom: solid 1px #CC0000;
+}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text{}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a
+{
+    color: #CC0000;
+}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a:hover
+{
+    text-decoration: underline;
+}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a.wtwitter-author{}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a.wtwitter-hashtag{}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a.wtwitter-media
+{
+    display: block;
+    text-align: center;
+}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text img{}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text img.wtwitter-media-source{}
+#wtwitter-root .wtwitter-timeline-footer{}
+/*
+#mppi-twitter > div{padding: 5px 5px 0px;}
+#mppi-twitter > div small,#mppi-twitter > div strong{display: block; color: #FFFFFF;}
+#mppi-twitter ul{
+    list-style: none outside none;
+    margin-left: 0;
+    position: relative;
+    padding: 5px 2px;
+}
+#mppi-twitter ul li{line-height: 18px;background-color: #FFFFFF;}
+#mppi-twitter ul li > div {
+    border-bottom: 1px solid #E8E8E8;
+    min-height: 51px;
+    padding: 2px;
+    position: relative;
+    line-height: inherit;
+}
+#mppi-twitter ul li div .tweet{
+    margin-left: 44px;
+}
+#mppi-twitter ul li div .tweet .cabecera{
+    line-height: inherit;height: 12px;
+}
+#mppi-twitter ul li div .tweet .cabecera span{
+    line-height: inherit;
+}
+#mppi-twitter ul li div .tweet .cabecera span img{
+    float: left;
+    margin-left: -44px;
+    margin-top: 3px;
+    height: 40px;
+    width: 40px;
+}
+#mppi-twitter ul li div .tweet .cabecera small{
+    color: #BBBBBB;
+    float: right;
+    margin-top: 1px;
+    position: relative;
+    font-size: 12px;
+}
+#mppi-twitter ul li div .tweet p.cuerpo{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+    font-size: 12px;
+}*/

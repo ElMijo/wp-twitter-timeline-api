@@ -12,13 +12,21 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
 
     WTwitterTimenline.templates = {
         wttaheader:'<img src="{{imgurl}}" /><span><span class="wtwitter-username">{{name}}</span><span class="wtwitter-screenname">@{{sname}}</span></span>',
-        wttatweet:'<li><p class="wtwitter-text">{{text}}</p></li>',
+        wttatweet:'<li><div class="wtwitter-header"><time class="wtwitter-date-time">{{datetime}}</time></div><div class="wtwitter-content"><p class="wtwitter-text">{{text}}</p></div><div class="wtwitter-footer"></div></li>',
         wttaauthor:'<a class="wtwitter-author" href="https://twitter.com/{{sname}}/status/{{tweetid}}">@{{sname}}</a>',
         wttahashtag:'<a class="wtwitter-hashtag" href="https://twitter.com/hashtag/{{hashtag}}?src=hash">{{hashtagname}}</a>',
         wttaimage:'<a class="wtwitter-media" href="{{expandedurl}}"><img class="wtwitter-media-source" src="{{mediaurl}}:small" alt="Enlace permanente de imagen incrustada"></a>',
         wttabtnseguir:'<a class="wtwitter-button-seguir" target="_blank" href="https://twitter.com/intent/follow?screen_name={{sname}}">Seguir</a>',
-        wttabtntwittear:'<a class="wtwitter-button-twittear" target="_blank" href="https://twitter.com/intent/tweet?screen_name={{sname}}">Twittear</a>'
+        wttabtntwittear:'<a class="wtwitter-button-twittear" target="_blank" href="https://twitter.com/intent/tweet?screen_name={{sname}}">Twittear</a>',
+        wtwitteryear:'<span class="wtwitter-year">{{year}}</span>',
+        wtwittermonth:'<span class="wtwitter-month">{{month}}</span>',
+        wtwittertime:'<span class="wtwitter-day-time" >{{time}}</span>'
     };
+
+// <a href="https://twitter.com/intent/tweet?in_reply_to=463440424141459456">Reply</a>
+// <a href="https://twitter.com/intent/retweet?tweet_id=463440424141459456">Retweet</a>
+// <a href="https://twitter.com/intent/favorite?tweet_id=463440424141459456">Favorite</a>
+
 
     WTwitterTimenline.getTemplate = function(template,data){
 
@@ -87,13 +95,63 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
 
     };
 
+    WTwitterTimenline.tweetDateTime = function(strDate)
+    {
+        var months = Array('ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic');
+        var now = new Date(), tweetdate = new Date(strDate), year = month = time = '';
+
+        if(tweetdate.getFullYear() < now.getFullYear())
+        {
+            year = this.getTemplate('wtwitteryear',{year:tweetdate.getFullYear()});
+        }
+        if(tweetdate.getMonth() < now.getMonth()||!!String(year).length)
+        {
+            var month = this.getTemplate('wtwittermonth',{month:months[tweetdate.getMonth()]});
+        }
+
+        if(!String(month).length)
+        {
+            var day = now.getDate() - tweetdate.getDate();
+            var hours = now.getHours() - tweetdate.getHours();
+            var min = now.getMinutes() - tweetdate.getMinutes();
+            var sec = now.getSeconds() - tweetdate.getSeconds();
+
+            if(day > 0)
+            {
+                time = day+' d';
+            }
+            else if (hours > 0)
+            {
+                time = hours+' h';
+            }
+            else if (min > 0)
+            {
+                time = min+' m';
+            }
+            else
+            {
+                time = sec+' s';
+            }
+        }
+        else
+        {
+            time = tweetdate.getDate();
+        }
+
+        time = this.getTemplate('wtwittertime',{time:time})
+
+        return year+month+time;
+    }
     WTwitterTimenline.getTweetsData = function(tweetsArr){
 
         var tweets = [];
 
         for($i=0;$i<tweetsArr.length;$i++)
         {
-            tweets.push({text:this.tweetLinks(tweetsArr[$i])});
+            tweets.push({
+                text:this.tweetLinks(tweetsArr[$i]),
+                datetime:this.tweetDateTime(tweetsArr[$i].created_at)
+            });
         }
 
         return tweets;

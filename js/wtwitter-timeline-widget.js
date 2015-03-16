@@ -15,7 +15,9 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
         wttatweet:'<li><p class="wtwitter-text">{{text}}</p></li>',
         wttaauthor:'<a class="wtwitter-author" href="https://twitter.com/{{sname}}/status/{{tweetid}}">@{{sname}}</a>',
         wttahashtag:'<a class="wtwitter-hashtag" href="https://twitter.com/hashtag/{{hashtag}}?src=hash">{{hashtagname}}</a>',
-        wttaimage:'<a class="wtwitter-media" href="{{expandedurl}}"><img class="wtwitter-media-source" src="{{mediaurl}}:small" alt="Enlace permanente de imagen incrustada"></a>'
+        wttaimage:'<a class="wtwitter-media" href="{{expandedurl}}"><img class="wtwitter-media-source" src="{{mediaurl}}:small" alt="Enlace permanente de imagen incrustada"></a>',
+        wttabtnseguir:'<a class="wtwitter-button-seguir" target="_blank" href="https://twitter.com/intent/follow?screen_name={{sname}}">Seguir</a>',
+        wttabtntwittear:'<a class="wtwitter-button-twittear" target="_blank" href="https://twitter.com/intent/tweet?screen_name={{sname}}">Twittear</a>'
     };
 
     WTwitterTimenline.getTemplate = function(template,data){
@@ -91,40 +93,21 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
 
         for($i=0;$i<tweetsArr.length;$i++)
         {
-            //ar text = this.tweetLinks(tweetsArr[$i]);
-
             tweets.push({text:this.tweetLinks(tweetsArr[$i])});
-
-            //console.log(text)
-            //var text = tweetsArr[$i].text;
-
-            //tweets.push({text:this.tweetAuthorLink(tweetsArr[$i])});
         }
 
         return tweets;
-
-/*        return {
-            imgurl:userObj.profile_image_url,
-            name:userObj.name,
-            sname:userObj.screen_name
-        };*/
-
     };
 
 
     WTwitterTimenline.renderTweets = function(tweetsArr){
 
-        var tweetsArr = this.getTweetsData(tweetsArr);
-        var tweetsList = '';
-
-        console.log(tweetsArr)
+        var tweetsArr = this.getTweetsData(tweetsArr),tweetsList = '';
 
         for($i=0;$i<tweetsArr.length;$i++)
         {
             tweetsList+= this.getTemplate('wttatweet',tweetsArr[$i])
         }
-
-        console.log(tweetsList)
         $(this.id+' .wtwitter-timeline-stream ol').html(tweetsList);
     };
 
@@ -141,17 +124,27 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
 
  */
 
+    WTwitterTimenline.renderFooter = function(userObj){
+
+        var footer = $(this.id+' .wtwitter-timeline-footer');
+
+        footer
+            .append(this.getTemplate('wttabtnseguir',{sname:userObj.screen_name}))
+            .append(this.getTemplate('wttabtntwittear',{sname:userObj.screen_name}))
+        ;
+
+    };
 
 
     var wtta = new _w.WTwitter();
 
     wtta
         .on('success',function(rsp){
-            console.log(rsp.data);
             if(!rsp.error&&!!rsp.data.length)
             {
                 WTwitterTimenline.renderHeader(rsp.data[0].user);
                 WTwitterTimenline.renderTweets(rsp.data);
+                WTwitterTimenline.renderFooter(rsp.data[0].user);
             }
         })
         .getTimeline()

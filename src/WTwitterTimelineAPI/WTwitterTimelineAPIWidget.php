@@ -18,7 +18,7 @@ class WTwitterTimelineAPIWidget extends WP_Widget
         parent::__construct(
             'wtta_widget',
             __('Wtwitter Timeline',WTTAPI_DOMAIN),
-            array( 'description' => __( 'A Foo Widget', 'text_domain' ))
+            array( 'description' => __( 'Wtwitter Widget', WTTAPI_DOMAIN ))
         );
     }
 

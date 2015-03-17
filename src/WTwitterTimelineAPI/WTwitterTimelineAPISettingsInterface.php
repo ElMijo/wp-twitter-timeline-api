@@ -5,7 +5,7 @@
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  * @copyright 2015 Jerry Anselmi
  * @license MIT
- * @package WPace
+ * @package WTwitterTimelineAPI
  * @version 1.0
  */
 

@@ -1,8 +1,16 @@
 <?php
-
+/**
+ * Contiene la clase que registra y naneja el widget
+ *
+ * @author Jerry Anselmi <jerry.anselmi@gmail.com>
+ * @copyright 2015 Jerry Anselmi
+ * @license MIT
+ * @package WTwitterTimelineAPI
+ * @version 1.0
+ */
 
 /**
-*
+* Clase que maneja el widget
 */
 class WTwitterTimelineAPIWidget extends WP_Widget
 {
@@ -34,8 +42,9 @@ class WTwitterTimelineAPIWidget extends WP_Widget
      *
      * @param array $instance Previously saved values from database.
      */
-    public function form( $instance ) {
-        echo "form";
+    public function form( $instance )
+    {
+
     }
 
     /**
@@ -48,12 +57,10 @@ class WTwitterTimelineAPIWidget extends WP_Widget
      *
      * @return array Updated safe values to be saved.
      */
-    public function update( $new_instance, $old_instance ) {
-        // processes widget options to be saved
-    }
-}
-function register_foo_widget() {
+    public function update( $new_instance, $old_instance )
+    {
 
+    }
 }
 add_action('widgets_init',function(){register_widget('WTwitterTimelineAPIWidget');});
 

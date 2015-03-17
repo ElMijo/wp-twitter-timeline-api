@@ -20,6 +20,10 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
      */
     protected $menu_slug = 'wtwitter-timeline-api';
 
+    /**
+     * Formato de texto del query del timeline
+     * @var string
+     */
     private $getfield_text_format = "?screen_name=%s&count=%s";
 
     function __construct()
@@ -32,11 +36,19 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
 
     }
 
+    /**
+     * Permite registrar el menu de opciones
+     * @return void
+     */
     final public function register_menu()
     {
         add_menu_page('Twitter Timeline API', 'WTwitter', 'manage_options', $this->menu_slug, array($this,'menu_page'), WTTAPI_URL.'/images/icon.png',61);
     }
 
+    /**
+     * Permite mostrar la pagina del menu de opciones
+     * @return void
+     */
     final public function menu_page()
     {
         $titulo = get_admin_page_title();
@@ -44,11 +56,19 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         include WTTAPI_DIR.'/inc/template/options.phtml';
     }
 
+    /**
+     * Este metodo recibe la petición ajax para obtener el timeline
+     * @return void
+     */
     final public function ajax_get_timeline()
     {
         wp_send_json($this->get_twitter_timeline());
     }
 
+    /**
+     * Permite incluir los archivo javascript y css del plugin
+     * @return void
+     */
     final public function include_css_js()
     {
         wp_enqueue_script('wtwitter-core',WTTAPI_URL.'js/wtwitter-timeline-api.js', array('jquery'), 'v1.0.0');
@@ -56,6 +76,10 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
 
     }
 
+    /**
+     * Permite conectarse al API de Twitter para obtener el timeline
+     * @return array     Devuelve un arreglo que se debe utilizar como respuesta a una petición ajax
+     */
     private function get_twitter_timeline()
     {
         include_once WTTAPI_DIR.'/src/twitter-api-php/TwitterAPIExchange.php';
@@ -73,6 +97,10 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         return $this->parse_twitter_response($query);
     }
 
+    /**
+     * Permite obtener la configuración del twitter
+     * @return array
+     */
     private function get_twitter_settings()
     {
         $data = get_option($this->setting_name,true);
@@ -90,6 +118,11 @@ class WTwitterTimelineAPI   extends WTwitterTimelineAPISettingsFactory  implemen
         );
     }
 
+    /**
+     * Permite procesar la respuesta y devolver un arreglo que pueda ser manejado como una respuesta
+     * @param  array $response Arreglo con la respuesta cruda de la consulta al API de Twitter
+     * @return array
+     */
     private function parse_twitter_response($response)
     {
         $array_response = array('error'=>true,'data'=>array(),'message'=>'');

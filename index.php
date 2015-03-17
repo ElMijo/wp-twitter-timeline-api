@@ -15,8 +15,6 @@ define('WTTAPI_DIR', dirname(__FILE__));
 define('WTTAPI_URL', plugin_dir_url(__FILE__));
 
 
-// include_once WTTAPI_DIR.'/src/WTwitterTimelineAPI/WTTAPISettings.php';
-// include_once WTTAPI_DIR.'/src/WTTAPI/WTTAPI.php';
 include_once WTTAPI_DIR.'/src/WTwitterTimelineAPI/WTwitterTimelineAPISettingsFactory.php';
 include_once WTTAPI_DIR.'/src/WTwitterTimelineAPI/WTwitterTimelineAPISettingsInterface.php';
 include_once WTTAPI_DIR.'/src/WTwitterTimelineAPI/WTwitterTimelineAPI.php';

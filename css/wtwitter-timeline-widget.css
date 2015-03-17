@@ -1,4 +1,7 @@
-#wtwitter-root{}
+#wtwitter-root
+{
+    display: none;
+}
 #wtwitter-root .wtwitter-timeline-header
 {
     padding: 10px;
@@ -47,7 +50,10 @@
     margin-right: 3px;
 }
 
-#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text{}
+#wtwitter-root .wtwitter-timeline-stream li .wtwitter-text
+{
+    margin-bottom: 5px;
+}
 #wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a{}
 #wtwitter-root .wtwitter-timeline-stream li .wtwitter-text a:hover
 {
@@ -112,7 +118,7 @@
 {
     width: 24px;
     height: 24px;
-    display: block;
+    display: inline-block;
 }
 
 
@@ -126,7 +132,7 @@
 }
 .wtwitter-icon-favorite
 {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAYCAYAAAC8/X7cAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABh0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzT7MfTgAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8xNi8xNV5PTl8AAAHfSURBVFiF7Zc9axRRFIafNYmmsFgkwcJ2uxCiWBjLkOy2S7A1W54iPyCcn3DwBwieTrRKOltTJE0+wE7/QrAQwopCEDZMmhFmZ+fjzuwuy0JeGLhz77nPvC/cuXemEUUR86wHszYwru4DzFqLoYXuvgCcABGwJSK3kzSiqkN8MwviBwcAXgKv4vYL4FsVg9PiV1lCbWApvjqVrE2RXyVAN6c9KdXiBwVw9wawkeh6HvqAEKlqbX4jfZC5+zpwADxKdD8BtlNzvwL9xP0/4J2IfC8xOxbfzIb4WS/xJvC2yESsdkbfKVAYYEz+SZqftYTOgMOAB6R1GM8t00T5I0sIwN2bgAA9YK0E/AP4BHwQkd8hTlS1Ft/MRviZAf7L3V8DR8CznJIr4I2IXAb4HpGqBvHNLJdfuAuJyDlwU1ByU9c8gJmV8ovMQ0kAd+8ArYKSVlxTS6payo9rclV2Duwl2gPgIr4Gif6QHWVq/Nx3wN0XgV9AE/gLHCdgn4Ed4DFwDTwVkUEWJ0+qWolvZpn8oo+5FeAh8Ad4LyKaGNt1dwP2gWVgFfhZJUCab2ZDfFUN4pftQj2gLyJfcsa7QFNEPlY0D4Cq9oC+mWXyVbULNM0sl18YYB40939k9wFmrTtVRa7KmSYEJwAAAABJRU5ErkJggg==') no-repeat 0px 0px transparent;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAYCAYAAAC8/X7cAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABh0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzT7MfTgAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8xNi8xNV5PTl8AAAHfSURBVFiF7Zc9axRRFIafNYmmsFgkwcJ2uxCiWBjLkOy2S7A1W54iPyCcn3DwBwieTrRKOltTJE0+wE7/QrAQwopCEDZMmhFmZ+fjzuwuy0JeGLhz77nPvC/cuXemEUUR86wHszYwru4DzFqLoYXuvgCcABGwJSK3kzSiqkN8MwviBwcAXgKv4vYL4FsVg9PiV1lCbWApvjqVrE2RXyVAN6c9KdXiBwVw9wawkeh6HvqAEKlqbX4jfZC5+zpwADxKdD8BtlNzvwL9xP0/4J2IfC8xOxbfzIb4WS/xJvC2yESsdkbfKVAYYEz+SZqftYTOgMOAB6R1GM8t00T5I0sIwN2bgAA9YK0E/AP4BHwQkd8hTlS1Ft/MRviZAf7L3V8DR8CznJIr4I2IXAb4HpGqBvHNLJdfuAuJyDlwU1ByU9c8gJmV8ovMQ0kAd+8ArYKSVlxTS6payo9rclV2Duwl2gPgIr4Gif6QHWVq/Nx3wN0XgV9AE/gLHCdgn4Ed4DFwDTwVkUEWJ0+qWolvZpn8oo+5FeAh8Ad4LyKaGNt1dwP2gWVgFfhZJUCab2ZDfFUN4pftQj2gLyJfcsa7QFNEPlY0D4Cq9oC+mWXyVbULNM0sl18YYB40939k9wFmrTtVRa7KmSYEJwAAAABJRU5ErkJggg==') no-repeat 0px 0px transparent;
 }
 
 .wtwitter-icon-replay:hover,
@@ -139,5 +145,15 @@
 .wtwitter-icon-favorite:active,
 .wtwitter-icon-favorite:focus
 {
-    background-position: 24px 0px;
+    background-position: -24px 0px;
+}
+
+.wtwitter-loader
+{
+    text-align: center;
+}
+.wtwitter-loader img
+{
+    max-height: 100%;
+    max-width: 100%;
 }

@@ -1,18 +1,13 @@
-/*!
-* Tim (lite)
-*   github.com/premasagar/tim
-*//*
-    A tiny, secure JavaScript micro-templating script.
-*/
+/*A tiny, secure JavaScript micro-templating script.*/
 var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(f,g){return f.replace(e,function(h,i){for(var c=i.split("."),d=c.length,b=g,a=0;a<d;a++){b=b[c[a]];if(b===void 0)throw"tim: '"+c[a]+"' not found in "+h;if(a===d-1)return b}})}}();
 
 (function(_w,$){
 
-    var WTwitterTimenline = {id:"#wtwitter-root"};
+    var WTwitterTimenline = {id:"#wtwitter-root",obj:null,timer:null};
 
     WTwitterTimenline.templates = {
         wttaheader:'<img src="{{imgurl}}" /><span><span class="wtwitter-username">{{name}}</span><span class="wtwitter-screenname">@{{sname}}</span></span>',
-        wttatweet:'<li><div class="wtwitter-header"><time class="wtwitter-date-time">{{datetime}}</time></div><div class="wtwitter-content"><p class="wtwitter-text">{{text}}</p></div><div class="wtwitter-footer"></div></li>',
+        wttatweet:'<li><div class="wtwitter-header"><time class="wtwitter-date-time">{{datetime}}</time></div><div class="wtwitter-content"><p class="wtwitter-text">{{text}}</p></div><div class="wtwitter-footer">{{acctions}}</div></li>',
         wttaauthor:'<a class="wtwitter-author" href="https://twitter.com/{{sname}}/status/{{tweetid}}">@{{sname}}</a>',
         wttahashtag:'<a class="wtwitter-hashtag" href="https://twitter.com/hashtag/{{hashtag}}?src=hash">{{hashtagname}}</a>',
         wttaimage:'<a class="wtwitter-media" href="{{expandedurl}}"><img class="wtwitter-media-source" src="{{mediaurl}}:small" alt="Enlace permanente de imagen incrustada"></a>',
@@ -20,13 +15,9 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
         wttabtntwittear:'<a class="wtwitter-button-twittear" target="_blank" href="https://twitter.com/intent/tweet?screen_name={{sname}}">Twittear</a>',
         wtwitteryear:'<span class="wtwitter-year">{{year}}</span>',
         wtwittermonth:'<span class="wtwitter-month">{{month}}</span>',
-        wtwittertime:'<span class="wtwitter-day-time" >{{time}}</span>'
+        wtwittertime:'<span class="wtwitter-day-time" >{{time}}</span>',
+        wtwitteracctions:'<a target="_blank" class="wtwitter-icon wtwitter-icon-replay" href="https://twitter.com/intent/tweet?in_reply_to={{tweetid}}"></a><a target="_blank" class="wtwitter-icon wtwitter-icon-retweet" href="https://twitter.com/intent/retweet?tweet_id={{tweetid}}"></a><a target="_blank" class="wtwitter-icon wtwitter-icon-favorite" href="https://twitter.com/intent/favorite?tweet_id={{tweetid}}"></a>'
     };
-
-// <a href="https://twitter.com/intent/tweet?in_reply_to=463440424141459456">Reply</a>
-// <a href="https://twitter.com/intent/retweet?tweet_id=463440424141459456">Retweet</a>
-// <a href="https://twitter.com/intent/favorite?tweet_id=463440424141459456">Favorite</a>
-
 
     WTwitterTimenline.getTemplate = function(template,data){
 
@@ -141,7 +132,8 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
         time = this.getTemplate('wtwittertime',{time:time})
 
         return year+month+time;
-    }
+    };
+
     WTwitterTimenline.getTweetsData = function(tweetsArr){
 
         var tweets = [];
@@ -150,7 +142,8 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
         {
             tweets.push({
                 text:this.tweetLinks(tweetsArr[$i]),
-                datetime:this.tweetDateTime(tweetsArr[$i].created_at)
+                datetime:this.tweetDateTime(tweetsArr[$i].created_at),
+                acctions:this.getTemplate('wtwitteracctions',{tweetid:tweetsArr[$i].id_str})
             });
         }
 
@@ -169,54 +162,62 @@ var tim=function(){var e=/{{\s*([a-z0-9_][\\.a-z0-9_]*)\s*}}/gi;return function(
         $(this.id+' .wtwitter-timeline-stream ol').html(tweetsList);
     };
 
-
-/*
-                <li>
-                    <div class="tweet-header"></div>
-                    <div class="tweet-content">
-                        <p class="tweet-content-text"></p>
-                        <div class="tweet-inline-media"></div>
-                    </div>
-                    <div class="tweet-footer"></div>
-                </li>
-
- */
-
     WTwitterTimenline.renderFooter = function(userObj){
 
         var footer = $(this.id+' .wtwitter-timeline-footer');
 
         footer
+            .html('')
             .append(this.getTemplate('wttabtnseguir',{sname:userObj.screen_name}))
             .append(this.getTemplate('wttabtntwittear',{sname:userObj.screen_name}))
         ;
 
     };
 
+    WTwitterTimenline.loaderIn = function(){
+        $(".wtwitter-loader img").stop(true,true).animate({opacity:0.8},'slow','linear',WTwitterTimenline.loaderOut)
+    };
 
-    var wtta = new _w.WTwitter();
+    WTwitterTimenline.loaderOut = function(){
+        $(".wtwitter-loader img").stop(true,true).animate({opacity:0.4},1500,'linear',WTwitterTimenline.loaderIn)
+    }
 
-    wtta
-        .on('success',function(rsp){
-            if(!rsp.error&&!!rsp.data.length)
-            {
-                WTwitterTimenline.renderHeader(rsp.data[0].user);
-                WTwitterTimenline.renderTweets(rsp.data);
-                WTwitterTimenline.renderFooter(rsp.data[0].user);
-            }
-        })
-        .getTimeline()
-    ;
+    WTwitterTimenline.init = function()
+    {
+        WTwitterTimenline.obj = new _w.WTwitter();
 
+        WTwitterTimenline.obj
+            .on('success',function(rsp){
+                if(!rsp.error&&!!rsp.data.length)
+                {
+                    WTwitterTimenline.renderHeader(rsp.data[0].user);
+                    WTwitterTimenline.renderTweets(rsp.data);
+                    WTwitterTimenline.renderFooter(rsp.data[0].user);
+
+                    $(".wtwitter-loader img").stop( true, true ).fadeOut('fast',function(){
+                        $(this).parent().remove();
+                        $("#wtwitter-root").show();
+                    });
+                }
+            })
+            .getTimeline()
+        ;
+
+        WTwitterTimenline.timer = setInterval(function(){WTwitterTimenline.obj.getTimeline()},10000);
+    };
+
+    $(document).ready(function(){
+
+        WTwitterTimenline.loaderOut();
+
+        if(!!_w.Pace)
+        {
+            Pace.on('hide',WTwitterTimenline.init);
+        }
+        else
+        {
+            WTwitterTimenline.init();
+        }
+
+    });
 })(window,jQuery)
-
-
-/*        $('<img/>',{src:imgurl}).appendTo(header);
-        $('<span/>',{
-            append:[
-                $('<span/>',{class:'wtwitter-username',text:name}),
-                $('<span/>',{class:'wtwitter-screenname',text:'@'+screen_name})
-            ]
-        }).appendTo(header);*/
-        // $('<span/>',{class:'wtwitter-username',text:name}).appendTo(header);
-        // $('<span/>',{class:'wtwitter-screenname',text:'@'+screen_name}).appendTo(header);
